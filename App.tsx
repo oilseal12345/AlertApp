@@ -49,10 +49,12 @@ export default function App() {
         handlePlaySound('pass', 'ปลอดภัยแล้ว');
         setStatus(0);
         console.log('safe')
-      }else if (data.warning == true && status == 0){
-        handlePlaySound(warning[0].direction, warning[0].name);
-        setStatus(1);
-        console.log('found')
+      }else{
+        if (status == 0){
+          handlePlaySound(warning[0].direction, warning[0].name);
+          setStatus(1);
+          console.log('found')
+        }
       }
       console.log(status);
       // console.log(data, warning)
