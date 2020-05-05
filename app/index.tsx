@@ -6,7 +6,7 @@ import {handlePlaySound} from "../sound";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-function App({ navigation }) {
+function App({ navigation, route }) {
   const [location, setLocation] = useState(null);
   const [name, setName] = useState(null);
   const [change, setChange] = useState(1);
@@ -14,6 +14,7 @@ function App({ navigation }) {
   const [data, setData ] = useState(null);
   const [warning, setWarning] = useState([]);
   const [status, setStatus] = useState(0);
+  const { radius } = route.params;
 
   useEffect(() => { 
     async function changeLocation(){
@@ -68,8 +69,7 @@ function App({ navigation }) {
       fetchData()
     }
   }, [change]);
-
-
+  
 
   return (
     <View style={styles.container}>
@@ -97,6 +97,15 @@ function App({ navigation }) {
           </View>
         </View>
       </View>
+      <Button
+        title="Report"
+        onPress={()=>{
+          navigation.navigate('Report',{
+            latitude:location.location.latitude,
+            longitude:location.location.longitude
+          })
+        }}
+      />
     </View>
   );
 }

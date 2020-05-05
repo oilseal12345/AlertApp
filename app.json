@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template (TypeScript)",
-    "slug": "AlertApp",
+    "name": "Alert App",
+    "slug": "my-app-AlertApp",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -24,7 +24,14 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.alertapp.alertapp",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.alertapp.aletapp",
+      "versionCode": 1
     }
+    
   }
 }
