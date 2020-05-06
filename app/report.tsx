@@ -7,6 +7,8 @@ import { TextInput } from 'react-native-gesture-handler';
 
 export default function report({ navigation, route }) {    
   const [text, setText] = useState(null);
+  const [name, setName] = useState(null);
+  const [type, setType] = useState(null);
   const {latitude, longitude} = route.params;  
   console.log(latitude, longitude)
   return (
@@ -14,6 +16,26 @@ export default function report({ navigation, route }) {
       <View style={styles.box}>        
         <View style={styles.inBox}>
         <Text style={styles.head}>Report</Text>
+        <View style={styles.coverText}>
+            <Text style={styles.textInside}>Name </Text>
+          </View>
+          <View>
+              <TextInput
+              style={styles.textInput2}
+              value={name}
+              onChangeText={name=>setText({name})}
+              />
+          </View>
+          <View style={styles.coverText}>
+            <Text style={styles.textInside}>Type </Text>
+          </View>
+          <View>
+              <TextInput
+              style={styles.textInput2}
+              value={type}
+              onChangeText={type=>setText({type})}
+              />
+          </View>
           <View style={styles.coverText}>
             <Text style={styles.textInside}>Current location </Text>
           </View>
@@ -30,15 +52,18 @@ export default function report({ navigation, route }) {
           <View style={styles.coverText}>
               <TextInput
               multiline={true}
-              style={styles.textInput2}
+              style={styles.textInput3}
               value={text}
               onChangeText={text=>setText({text})}
               />
-          </View>         
+          </View> 
+          <View style={{width:'50%', marginLeft:'25%'}}>
+          <Button
+          color='#00CC00'
+          title="Submit"
+          onPress={()=>Alert.alert('Success')}/>
+          </View>        
         </View>
-        <Button
-        title="Submit"
-        onPress={()=>Alert.alert('Success')}/>
       </View>
     </View>
   );
@@ -49,27 +74,14 @@ export default function report({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: '#fff',
-    alignItems: 'center'
-  },
-  switch: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.3 }],
-    position:'absolute',
-    right:0
-  },
-  logo:{    
-    width:'45%',
-    height:'25%',
-    resizeMode: 'stretch',
-    marginTop:'20%'
+    alignItems: 'center',
+    backgroundColor: '#a4a4a4'
   },
   box:{
-    borderStyle:'solid',
-    borderWidth:1,
-    borderColor:'#000',
-    width:'98%',
-    height:'90%',
-    marginTop:10
+    backgroundColor:'#fff',
+    width:'99%',
+    height:'80%',
+    marginTop:windowHeight*0.08
   },
   coverText:{
     flexDirection:'row',
@@ -79,7 +91,7 @@ const styles = StyleSheet.create({
     margin:'10%'
   },
   textInside:{
-    fontSize:windowWidth*0.07
+    fontSize:windowWidth*0.05
   },
   textInput:{
     height: 40,
@@ -88,9 +100,16 @@ const styles = StyleSheet.create({
     padding:10
   },
   textInput2:{
-    height: windowHeight*0.15,
-    width:windowWidth*0.8,
-    fontSize:windowWidth*0.038,
+    height: 40,
+    fontSize:windowWidth*0.045,
+    borderWidth:1,
+    borderColor:'#000',
+    padding:10
+  },
+  textInput3:{
+    height: windowHeight*0.10,
+    width:windowWidth*0.72,
+    fontSize:windowWidth*0.035,
     borderColor:'#000',
     borderStyle:'solid',
     padding:10,
@@ -98,7 +117,7 @@ const styles = StyleSheet.create({
   },
   head:{
     fontSize:windowWidth*0.12,
-    marginBottom:windowHeight*0.05
+    marginBottom:windowHeight*0.02
   }
 
 });

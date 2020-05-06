@@ -100,14 +100,16 @@ export default function setting({ navigation, route }) {
             </TouchableHighlight>
           </View>
         </View>
-        <Button
-        title="Submit"
+        <View style={{width:'50%', marginLeft:'25%'}}>
+          <Button
+          color='#00CC00'
+          title="Submit"
         onPress={()=>{
           navigation.navigate('Home', {
             radius:radius
           })
         }}
-        />
+        /></View>
       </View>
     </View>
   );
@@ -118,7 +120,7 @@ export default function setting({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: '#fff',
+    backgroundColor: '#a4a4a4',
     alignItems: 'center'
   },
   switch: {
@@ -133,16 +135,14 @@ const styles = StyleSheet.create({
     marginTop:'20%'
   },
   box:{
-    borderStyle:'solid',
-    borderWidth:1,
-    borderColor:'#000',
-    width:'98%',
-    height:'90%',
-    marginTop:10
+    backgroundColor:'#fff',
+    width:'99%',
+    height:'80%',
+    marginTop:windowHeight*0.08
   },
   coverText:{
     flexDirection:'row',
-    marginBottom: windowHeight*0.055
+    marginBottom: windowHeight*0.03
   },
   inBox:{
     margin:'10%'
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   head:{
     fontSize:windowWidth*0.12,
-    marginBottom:windowHeight*0.05
+    marginBottom:windowHeight*0.02
   }
 
 });
