@@ -19,7 +19,6 @@ function App({ navigation, route }) {
   const [status, setStatus] = useState(0);
   const { radius } = route.params;
   const { isPlay } = route.params;
-  console.log(isPlay)
 
   useEffect(() => { 
     async function changeLocation(){
@@ -64,7 +63,6 @@ function App({ navigation, route }) {
         setLength('');
         console.log('safe')
       }else if(status == 1 && count%4 == 0){
-        console.log('fff')
         handlePlaySound(warning[0].direction, warning[0].name, isPlay);
       }else{
         if (data && status == 0){
@@ -77,9 +75,9 @@ function App({ navigation, route }) {
           console.log('found')
         }
       }
-      console.log(status)
-      console.log(count)
-      console.log(warning)
+      // console.log(status)
+      // console.log(count)
+      // console.log(warning)
       // console.log('This is warning', warning[0].name);
       // console.log('This is data', data.warning[0].name);
     }

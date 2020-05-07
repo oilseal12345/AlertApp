@@ -19,7 +19,7 @@ export default function report({ navigation, route }) {
   const {latitude, longitude} = route.params;  
   console.log(latitude, longitude)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('submit')
     setReport({
       name:name,
@@ -27,10 +27,10 @@ export default function report({ navigation, route }) {
       longitude:longitude,
       type:type
     })
-    axios.post('https://us-central1-project-base-74c62.cloudfunctions.net/api/report/add', report)
+    await axios.post('https://us-central1-project-base-74c62.cloudfunctions.net/api/report/add', report)
       .then(function (response) {
-          navigation.navigate('Home')
           console.log(response)
+          navigation.navigate('Home')
       })
       .catch(function (error) {
           console.log(error)
@@ -73,18 +73,7 @@ export default function report({ navigation, route }) {
               editable={false}
               />
           </View>
-          <View style={styles.coverText}>
-            <Text style={styles.textInside}>Messenger </Text>
-          </View>
-          <View style={styles.coverText}>
-              <TextInput
-              multiline={true}
-              style={styles.textInput3}
-              value={text}
-              onChangeText={text=>setText({text})}
-              />
-          </View> 
-          <View style={{width:'50%', marginLeft:'25%'}}>
+          <View style={{width:'50%', marginLeft:'25%', marginTop:'8%'}}>
           <Button
           color='#00CC00'
           title="Submit"
@@ -99,7 +88,6 @@ export default function report({ navigation, route }) {
 
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex:1,
@@ -109,7 +97,7 @@ const styles = StyleSheet.create({
   box:{
     backgroundColor:'#fff',
     width:'99%',
-    height:'90%',
+    height:'85%',
     marginTop:windowHeight*0.08
   },
   coverText:{

@@ -19,25 +19,21 @@ export default function setting({ navigation, route }) {
   
   useEffect(()=>{
     if(radius == 300){
-      console.log('Hi1')
       setPressed300(true)
       setPressed500(false)
       setPressed800(false)
       setPressed1000(false)
     }else if(radius == 500){
-      console.log('Hi2')
       setPressed300(false)
       setPressed500(true)
       setPressed800(false)
       setPressed1000(false)
     }else if(radius == 800){
-      console.log('Hi3')
       setPressed300(false)
       setPressed500(false)
       setPressed800(true)
       setPressed1000(false)
     }else if(radius == 1000){
-      console.log('Hi4')
       setPressed300(false)
       setPressed500(false)
       setPressed800(false)
