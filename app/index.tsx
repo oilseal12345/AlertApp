@@ -123,10 +123,12 @@ function App({ navigation, route }) {
       <TouchableOpacity
         style={styles.btnReport}
         onPress={()=>{
-          navigation.navigate('Report',{
-            latitude:location.location.latitude,
-            longitude:location.location.longitude
-          })
+          if(location){
+            navigation.navigate('Report',{
+              latitude:location.location.latitude,
+              longitude:location.location.longitude
+            })
+          }         
         }}
       ><Text>Report</Text> 
       </TouchableOpacity>
