@@ -12,7 +12,6 @@ export default function setting({ navigation, route }) {
   const [pressed500, setPressed500] = useState(false); 
   const [pressed800, setPressed800] = useState(false); 
   const [pressed1000, setPressed1000] = useState(false); 
-  const toggleSwitch = () => setIsNotification(previousState => !previousState);
   const toggleSwitch2 = () => setIsPlay(previousState => !previousState);
   console.log(isPlay)
   // const radiusParams = route.params.radius
@@ -47,18 +46,7 @@ export default function setting({ navigation, route }) {
     <View style={styles.container}>
       <View style={styles.box}>        
         <View style={styles.inBox}>
-        <Text style={styles.head}>Setting</Text>
-          <View style={styles.coverText}>
-            <Text style={styles.textInside}>Notification </Text>
-            <Switch
-                style={styles.switch}
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isNotification ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isNotification}
-            />
-          </View>
+        <Text style={styles.head}>Setting</Text>         
           <View style={styles.coverText}>
             <Text style={styles.textInside}>Sound </Text>
             <Switch
