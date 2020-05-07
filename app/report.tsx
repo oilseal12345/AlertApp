@@ -41,6 +41,7 @@ export default function report({ navigation, route }) {
           });
       if(isLoading == false){
         navigation.navigate('Home')
+        alert('สำเร็จ')
       }
     }else {
       console.log('Text is null');
