@@ -13,33 +13,37 @@ export default function report({ navigation, route }) {
     longitude:0,
     type:""
   });
+  const [text, setText] = useState(null);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
   const {latitude, longitude} = route.params;  
-  const [isLoading, setIsLoading] = useState(false)
   console.log(latitude, longitude)
-  useEffect(()=>{
-    setReport({
-      name:name,
-      latitude:latitude,
-      longitude:longitude,
-      type:type
-    })
-  }, [name, type])   
 
   const handleSubmit = async () => {
-    setIsLoading(true)
-    console.log('submit') 
-    await axios.post('https://us-central1-project-base-74c62.cloudfunctions.net/api/report/add', report)
-      .then(function (response) {
-          setIsLoading(false)          
-      })
-      .catch(function (error) {
-      }) 
-      if(isLoading == false){
-        navigation.navigate('Home')
-      }
-}
+    console.log('this is name:', name, 'this is type:',  type)
+    console.log('submit')
+    if (name != null && type != null) {
+      console.log('Not Empty');
+      setReport({
+        name:name,
+        latitude:latitude,
+        longitude:longitude,
+        type:type
+      });
+      await axios.post('https://us-central1-project-base-74c62.cloudfunctions.net/api/report/add', report)
+          .then(function (response) {
+            console.log(response)
+            navigation.navigate('Home')
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      alert('สำเร็จ')
+    } else{
+      console.log('is empty')
+      alert('โปรดกรอกข้อมูลให้ครบทุกช่อง')
+    }
+};
   
   return (
     <View style={styles.container}>
@@ -48,7 +52,7 @@ export default function report({ navigation, route }) {
         <View style={styles.inBox}>
         <Text style={styles.head}>Report</Text>
         <View style={styles.coverText}>
-            <Text style={styles.textInside}>Name </Text>
+            <Text style={styles.textInside}>Name (เช่น ชื่อถนน, ชื่อสถานที่ เป็นต้น)</Text>
           </View>
           <View>
               <TextInput
@@ -58,7 +62,7 @@ export default function report({ navigation, route }) {
               />
           </View>
           <View style={styles.coverText}>
-            <Text style={styles.textInside}>Type </Text>
+            <Text style={styles.textInside}>Type (เช่น รถชน, ถนนลื่น เป็นต้น)</Text>
           </View>
           <View>
               <TextInput
