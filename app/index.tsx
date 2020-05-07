@@ -18,6 +18,8 @@ function App({ navigation, route }) {
   const [warning, setWarning] = useState([]);
   const [status, setStatus] = useState(0);
   const { radius } = route.params;
+  const { isPlay } = route.params;
+  console.log(isPlay)
 
   useEffect(() => { 
     async function changeLocation(){
@@ -54,19 +56,19 @@ function App({ navigation, route }) {
         setWarning(data["warning"]);
       }
       if(data && data.warning == false && status == 1){
-        handlePlaySound('pass', 'ปลอดภัยแล้ว');
+        handlePlaySound('pass', 'ปลอดภัยแล้ว', isPlay);
         setStatus(0);
         setName('ยังไม่พบจุดอันตราย');
         setPath(require('../assets/img/marker.png'));
         setTstatus('ปลอดภัย');
         setLength('');
         console.log('safe')
-      }else if(status == 1 && count%2 == 0){
+      }else if(status == 1 && count%4 == 0){
         console.log('fff')
-        handlePlaySound(warning[0].direction, warning[0].name);
+        handlePlaySound(warning[0].direction, warning[0].name, isPlay);
       }else{
         if (data && status == 0){
-          handlePlaySound(warning[0].direction, warning[0].name);
+          handlePlaySound(warning[0].direction, warning[0].name, isPlay);
           setStatus(1);
           setPath(require('../assets/img/shapes-and-symbols.png'));
           setTstatus('อันตราย');
@@ -90,7 +92,10 @@ function App({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.setting} onPress={() => navigation.navigate('Setting')}>
+      <TouchableOpacity style={styles.setting} onPress={() => navigation.navigate('Setting',{
+        radius:radius,
+        isPlay:isPlay
+      })}>
         <Image source={require('../assets/img/setting.png')} 
         style={styles.set_img}
         />

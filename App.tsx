@@ -15,7 +15,7 @@ export default function App() {
           <Stack.Screen 
           name="Home" 
           component={Index}
-          initialParams={{ radius:300 }}
+          initialParams={{ radius:300, isPlay:true }}
           />
           <Stack.Screen 
           name="Setting" 
@@ -24,6 +24,7 @@ export default function App() {
           <Stack.Screen
             name="Report"
             component={Report}
+            initialParams={{latitude:0, longitude:0}}
           />
         </Stack.Navigator>
       </NavigationContainer>

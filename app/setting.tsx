@@ -6,14 +6,16 @@ import { StyleSheet, Text, View, Switch, Dimensions, TouchableHighlight, Button 
 
 export default function setting({ navigation, route }) {    
   const [isNotification, setIsNotification] = useState(false);
-  const [isSound, setIsSound] = useState(false);
-  const [radius, setRadius] = useState(300);
+  const [isPlay, setIsPlay] = useState(route.params.isPlay);
+  const [radius, setRadius] = useState(route.params.radius);
   const [pressed300, setPressed300] = useState(false);
   const [pressed500, setPressed500] = useState(false); 
   const [pressed800, setPressed800] = useState(false); 
   const [pressed1000, setPressed1000] = useState(false); 
   const toggleSwitch = () => setIsNotification(previousState => !previousState);
-  const toggleSwitch2 = () => setIsSound(previousState => !previousState);
+  const toggleSwitch2 = () => setIsPlay(previousState => !previousState);
+  console.log(isPlay)
+  // const radiusParams = route.params.radius
   
   useEffect(()=>{
     if(radius == 300){
@@ -66,10 +68,10 @@ export default function setting({ navigation, route }) {
             <Switch
                 style={styles.switch}
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isSound ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isPlay ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch2}
-                value={isSound}
+                value={isPlay}
             />
           </View>
           <View style={styles.coverText}>
@@ -106,7 +108,8 @@ export default function setting({ navigation, route }) {
           title="Submit"
         onPress={()=>{
           navigation.navigate('Home', {
-            radius:radius
+            radius:radius,
+            isPlay:isPlay
           })
         }}
         /></View>
