@@ -15,7 +15,7 @@ export async function handlePlaySound(event, name, isSpeech) {
             Speech.speak(ThingToSay);
            break;
         case 'right':
-            ThingToSay = 'ระวัง ข้างหน้าขวามีอุบัติเหตุ' + name + 'เกิดขึ้นบ่อย';
+            ThingToSay = 'ระวัง ด้านขวามีอุบัติเหตุ' + name + 'เกิดขึ้นบ่อย';
             Speech.speak(ThingToSay);
            break;
         case 'pass':
