@@ -13,28 +13,32 @@ export default function report({ navigation, route }) {
     longitude:0,
     type:""
   });
-  const [text, setText] = useState(null);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
   const {latitude, longitude} = route.params;  
+  const [isLoading, setIsLoading] = useState(false)
   console.log(latitude, longitude)
-
-  const handleSubmit = async () => {
-    console.log('submit')
+  useEffect(()=>{
     setReport({
       name:name,
       latitude:latitude,
       longitude:longitude,
       type:type
     })
+  }, [name, type])   
+
+  const handleSubmit = async () => {
+    setIsLoading(true)
+    console.log('submit') 
     await axios.post('https://us-central1-project-base-74c62.cloudfunctions.net/api/report/add', report)
       .then(function (response) {
-          console.log(response)
-          navigation.navigate('Home')
+          setIsLoading(false)          
       })
       .catch(function (error) {
-          console.log(error)
       }) 
+      if(isLoading == false){
+        navigation.navigate('Home')
+      }
 }
   
   return (
