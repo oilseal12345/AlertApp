@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'rea
 import getLocationAsync from '../TestPermissions'
 import axios from 'axios';
 import {handlePlaySound} from "../sound";
+import {headingDistanceTo} from "geolocation-utils"
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -16,25 +17,45 @@ function App({ navigation, route }) {
   const [count, setCount] = useState(0);
   const [data, setData ] = useState(null);
   const [warning, setWarning] = useState([]);
+  const [locationOld, setLocationOld] = useState(null)
+  const [heading, setHeading] = useState(null)
   const [status, setStatus] = useState(0);
   const { radius } = route.params;
   const { isPlay } = route.params;
 
   useEffect(() => { 
+    console.disableYellowBox = true;
     async function changeLocation(){
       //ดึง location
       const location = await getLocationAsync();
       //set ค่า location พร้อมที่จะ post ให้ backend
-      setLocation({
-        location:{
-          latitude:location.coords.latitude,
-          longitude:location.coords.longitude
-        },
-        radius:radius
-      })
-    }
+      if(locationOld){
+        setLocation({
+          location:{
+            latitude:location.coords.latitude,
+            longitude:location.coords.longitude
+          },
+          radius:radius,
+          heading:heading
+        })
+      }else{
+        setLocation({
+          location:{
+            latitude:location.coords.latitude,
+            longitude:location.coords.longitude
+          },
+          radius:radius,
+          heading:90
+        })
+      }
+      
+    }    
     //เรียกฟังชั่น เพื่อ get ค่า location user
     changeLocation();
+    //set heading ให้กับ user
+    if(locationOld){
+      setHeading(headingDistanceTo({lat:location['location'].latitude, lon:location['location'].longitude}, locationOld).heading)
+    }
     //ทุกๆ 6 วิ ทำการ post ข้อมูลให้ฝั่งของ backend
     if(count%2 == 0){      
       setChange(change+1)
@@ -45,11 +66,11 @@ function App({ navigation, route }) {
     }, 3000);    
     return () => clearInterval(id);
 
-  }, [count]); 
-  
+  }, [count]);
+
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.post(`https://us-central1-project-base-74c62.cloudfunctions.net/api/location/near2`, location);
+      const result = await axios.post(`https://us-central1-project-base-74c62.cloudfunctions.net/api/location/near`, location);
       setData(result.data);
       if(data){
         setWarning(data["warning"]);
@@ -65,7 +86,9 @@ function App({ navigation, route }) {
       }else if(status == 1 && count%4 == 0){
         handlePlaySound(warning[0].direction, warning[0].name, isPlay);
       }else{
-        if (data && status == 0){
+        if (data && status == 0 && data.warning !== false){          
+          console.log("hi hi hi hi")
+          console.log(warning)
           handlePlaySound(warning[0].direction, warning[0].name, isPlay);
           setStatus(1);
           setPath(require('../assets/img/shapes-and-symbols.png'));
@@ -75,14 +98,13 @@ function App({ navigation, route }) {
           console.log('found')
         }
       }
-      // console.log(status)
-      // console.log(count)
-      // console.log(warning)
-      // console.log('This is warning', warning[0].name);
-      // console.log('This is data', data.warning[0].name);
     }
     if(location){
       // console.log(location);
+      setLocationOld({
+          lat:location['location'].latitude,
+          lon:location['location'].longitude
+      })
       fetchData()
     }
   }, [change]);
