@@ -29,33 +29,22 @@ function App({ navigation, route }) {
       //ดึง location
       const location = await getLocationAsync();
       //set ค่า location พร้อมที่จะ post ให้ backend
-      if(locationOld){
-        setLocation({
-          location:{
-            latitude:location.coords.latitude,
-            longitude:location.coords.longitude
-          },
-          radius:radius,
-          heading:heading
-        })
-      }else{
-        setLocation({
-          location:{
-            latitude:location.coords.latitude,
-            longitude:location.coords.longitude
-          },
-          radius:radius,
-          heading:90
-        })
-      }
+      setLocation({
+        location:{
+          latitude:location.coords.latitude,
+          longitude:location.coords.longitude
+        },
+        radius:radius
+      })
+      
       
     }    
     //เรียกฟังชั่น เพื่อ get ค่า location user
     changeLocation();
     //set heading ให้กับ user
-    if(locationOld){
-      setHeading(headingDistanceTo({lat:location['location'].latitude, lon:location['location'].longitude}, locationOld).heading)
-    }
+    // if(locationOld){
+    //   setHeading(headingDistanceTo({lat:location['location'].latitude, lon:location['location'].longitude}, locationOld).heading)
+    // }
     //ทุกๆ 6 วิ ทำการ post ข้อมูลให้ฝั่งของ backend
     if(count%2 == 0){      
       setChange(change+1)
@@ -70,7 +59,7 @@ function App({ navigation, route }) {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.post(`https://us-central1-project-base-74c62.cloudfunctions.net/api/location/near`, location);
+      const result = await axios.post(`https://us-central1-project-base-74c62.cloudfunctions.net/api/location/near2`, location);
       setData(result.data);
       if(data){
         setWarning(data["warning"]);
@@ -101,10 +90,10 @@ function App({ navigation, route }) {
     }
     if(location){
       // console.log(location);
-      setLocationOld({
-          lat:location['location'].latitude,
-          lon:location['location'].longitude
-      })
+      // setLocationOld({
+      //     lat:location['location'].latitude,
+      //     lon:location['location'].longitude
+      // })
       fetchData()
     }
   }, [change]);
